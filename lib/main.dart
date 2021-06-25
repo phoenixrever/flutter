@@ -1,51 +1,79 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// void main() {
-  // runApp(Text("hello world",textDirection:TextDirection.ltr));
-  // runApp(Center(
-  //   child: Text(
-  //       "hello world",
-  //       textDirection:TextDirection.ltr,
-  //       style: TextStyle(
-  //         fontSize: 30,
-  //         color: Colors.purpleAccent
-  //       ),
-  //   ),
-  // ));
-  // runApp(MaterialApp(
-  //   title: "Hello World", //多应用程序切换时候的标题
-  //   home: Scaffold(            //脚手架
-  //     appBar: AppBar(          //导航栏
-  //       title: Text("Hello Title"),
-  //     ),
-  //     body: Center(
-  //       child: Text(
-  //         "Hello World",
-  //         textDirection: TextDirection.ltr,
-  //         style: TextStyle(fontSize: 30, color: Colors.purpleAccent),
-  //       ),
-  //     ),
-  //   ),
-  // ));
+main() => runApp(MyApp());
 
-//   runApp(MyApp());
-// }
+class ContentWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return ContentWidgetState();
+  }
+}
 
-main()=>runApp(MyApp());
+///state没有 @immutable 注解  可以定义变量
+class ContentWidgetState extends State<ContentWidget> {
+  int counter = 0;
 
-class ContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Row(
+        child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Checkbox(value: true, onChanged: (value) => print("Hello World")),
+        Row(
+         mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                ///类似react 改变状态刷新页面
+                setState(() {
+                  counter++;
+                });
+              },
+              child: Text("记数++"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                ///类似react 改变状态刷新页面
+                setState(() {
+                  counter--;
+                });
+              },
+              child: Text("记数--"),
+            ),
+          ],
+        ),
+        Text(
+          "$counter",
+          textDirection: TextDirection.ltr,
+          style: TextStyle(fontSize: 20),
+        ),
+      ],
+    ));
+  }
+}
+
+///无法实现动态数字内容改变
+class ContentWidget2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          children: [
+            ElevatedButton(
+              onPressed: () => {print("记数++")},
+              child: Text("记数++"),
+            ),
+          ],
+        ),
         Text(
           "同意协议",
           textDirection: TextDirection.ltr,
           style: TextStyle(fontSize: 20),
-        )
+        ),
       ],
     ));
   }
@@ -63,6 +91,8 @@ class MyApp extends StatelessWidget {
           title: Text("Hello Title"),
         ),
         body: ContentWidget(),
+        floatingActionButton:
+            FloatingActionButton(child: Icon(Icons.add), onPressed: () {}),
       ),
     );
   }
