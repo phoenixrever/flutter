@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 main() => {runApp(MyApp())};
@@ -9,111 +9,57 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(title: Text("按钮demo")),
-      // body: ContentWidget(),
-      body: ButtonDemo(),
+      body: ImageWidgetDemo(),
       bottomNavigationBar: BottomAppBar(child: Text("bottom")),
     ));
   }
 }
 
-class ContentWidget extends StatelessWidget {
+class ImageWidgetDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TextDemo();
-  }
-}
+    return ListView(
+      children: [
+        Container(
+            // width: 300,
+            // height: 500,
+            // color: Colors.red,
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                ///圆方案一 可以放文本
+                CircleAvatar(
+                  radius: 200, //半径
+                  backgroundImage: NetworkImage(
+                      "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F07c7a646d35d00d80ab4f5a0f64d85d8ee74cc4b1c915-iOmki5_fw658&refer=http%3A%2F%2Fhbimg.b0.upaiyun.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627200084&t=2b85574c08fe102ac318a1d2cd3b8d49"),
+                  child: Container(
+                    alignment: Alignment(0, .5), //x y
+                    // width: 200,
+                    // height: 200,
+                    child: Text("beautiful woman"),
+                  ),
+                ),
 
-class TextDemo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "花月本无痕----------------------------------------------------\n浪迹天涯的落魄",
-            style: TextStyle(
-              fontSize: 20,
-              color: Color(0xffff0000),
-            ),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis, //花月本无痕...
-          ),
-          Text.rich(TextSpan(children: [
-            TextSpan(
-                text: "hello\n",
-                style: TextStyle(fontSize: 20, color: Colors.green)),
-            TextSpan(
-                text: "hello\n",
-                style: TextStyle(fontSize: 20, color: Colors.green)),
-            TextSpan(
-                text: "hello\n",
-                style: TextStyle(fontSize: 20, color: Colors.green)),
-          ]))
-        ],
-      ),
-    );
-  }
-}
+                ///fill  不规则拉升  cover 比例拉升
+                SizedBox(height: 20),
 
-class ButtonDemo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-              onPressed: () {},
-              child: Row(   //row默认占据整行
-                mainAxisAlignment: MainAxisAlignment.center,//垂直居中
-                mainAxisSize:MainAxisSize.min , //自动适应元素宽度 重要
-                children: [
-                  Icon(Icons.call,color: Colors.yellowAccent,),
-                  SizedBox(width: 10),
-                  Text("hello google"),
-                ],
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.purpleAccent,
-                //背景色
-                onPrimary: Colors.white,
-                //字体色
-                padding: EdgeInsets.all(20),
-                textStyle: TextStyle(fontSize: 30),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25) //边框角度
-                    ),
-              )),
-          //升降按钮?
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                "hello google",
-              ),
-              style: ButtonStyle(
-                  backgroundColor:
-                      ///Convenience method   方便方法
-                      MaterialStateProperty.all<Color>(Colors.green),
-                  foregroundColor:   //字体颜色
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  textStyle: MaterialStateProperty.all<TextStyle>(
-                      TextStyle(fontSize: 30)),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.all(20)),
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25))))),
-          OutlinedButton(
-              onPressed: () {},
-              child: Text("hello google"),
-          style: OutlinedButton.styleFrom(
-            primary: Colors.red,
-          )),
-          FloatingActionButton(onPressed: () {}, child: Text("hello google")),
-        ],
-      ),
+                ///圆角组件,相当于一个已经有圆角的div,若子组件是矩形,将会以圆显示,否则为椭圆
+                ClipOval(
+                    child: Image.asset(
+                  "assets/images/beauty.jpg",
+                  width: 400,
+                  height: 400,
+                )),
+                SizedBox(height: 20),
+
+                ///裁剪矩形组件,适合用来剪切图片圆角等
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(50),//x y
+                    // borderRadius: BorderRadius.all(Radius.circular(50)), //4个角
+                    child: Image.asset("assets/images/ggg.jpg")),
+              ],
+            )),
+      ],
     );
   }
 }
