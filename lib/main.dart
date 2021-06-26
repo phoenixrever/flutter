@@ -9,57 +9,65 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(title: Text("按钮demo")),
-      body: ImageWidgetDemo(),
+      body: TextFieldDemo(),
       bottomNavigationBar: BottomAppBar(child: Text("bottom")),
     ));
   }
 }
 
-class ImageWidgetDemo extends StatelessWidget {
+class TextFieldDemo extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return TextFieldStateDemo();
+  }
+}
+
+class TextFieldStateDemo extends State<TextFieldDemo> {
+ final textC= TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    textC.text="我是初始值";
+    textC.addListener(() {
+      print("监听到值的改变====>${textC.text}");  ///监听变化的值
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Container(
-            // width: 300,
-            // height: 500,
-            // color: Colors.red,
-            padding: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                ///圆方案一 可以放文本
-                CircleAvatar(
-                  radius: 200, //半径
-                  backgroundImage: NetworkImage(
-                      "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F07c7a646d35d00d80ab4f5a0f64d85d8ee74cc4b1c915-iOmki5_fw658&refer=http%3A%2F%2Fhbimg.b0.upaiyun.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1627200084&t=2b85574c08fe102ac318a1d2cd3b8d49"),
-                  child: Container(
-                    alignment: Alignment(0, .5), //x y
-                    // width: 200,
-                    // height: 200,
-                    child: Text("beautiful woman"),
-                  ),
-                ),
-
-                ///fill  不规则拉升  cover 比例拉升
-                SizedBox(height: 20),
-
-                ///圆角组件,相当于一个已经有圆角的div,若子组件是矩形,将会以圆显示,否则为椭圆
-                ClipOval(
-                    child: Image.asset(
-                  "assets/images/beauty.jpg",
-                  width: 400,
-                  height: 400,
-                )),
-                SizedBox(height: 20),
-
-                ///裁剪矩形组件,适合用来剪切图片圆角等
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(50),//x y
-                    // borderRadius: BorderRadius.all(Radius.circular(50)), //4个角
-                    child: Image.asset("assets/images/ggg.jpg")),
-              ],
-            )),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: TextField(
+          decoration: InputDecoration(
+            //装饰品; 装饰图案; 装饰风格;
+            icon: Icon(Icons.people),
+            labelText: "用户名",
+            hintText: "请输入用户名",
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.red.withOpacity(0.9),  // 边框颜色
+                  width: 2
+              ),
+            ),
+            focusedBorder:OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.blue.withOpacity(0.9),
+                width: 2
+              ),
+            ),
+            filled: true,
+            fillColor: Colors.white10
+          ),
+          onChanged: (value) {
+            print(value);
+          },
+          onSubmitted: (value){
+            print(value);
+          },
+          controller: textC   ///监听值的改变
+        ),
+      ),
     );
   }
 }
